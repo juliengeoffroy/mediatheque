@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Médiathèque</title>
+
+    <style>
+    .btn-orange {
+        background-color: white;
+        border: 1px solid #e3713b;
+        padding: 5px 10px;
+        color: #e3713b;
+        font-weight: bold;
+        text-decoration: none;
+        border-radius: 4px;
+        display: inline-block;
+        margin-bottom: 10px;
+    }
+
+    .btn-orange:hover {
+        background-color: #e3713b;
+        color: white;
+    }
+    </style>
+
+</head>
+<body>
+    {% extends 'base.html' %}
+
+    {% block content %}
+    <h1 style="margin-bottom: 20px;">Liste des membres</h1>
+
+        <!-- 🔁 Bouton retour placé ici -->
+        <a href="{% url 'liste_emprunts' %}" class="btn-orange">⬅ Retour</a>
+
+    <table border="1" cellpadding="10" cellspacing="0" style="width:100%; border-collapse: collapse;">
+        <thead style="background-color: #fce6d5;">
+            <tr>
+                <th>🪪 Nom</th>
+                <th>👤 Prénom</th>
+                <th>📬 Adresse</th>
+                <th>📧 Email</th>
+                <th>📞 Téléphone</th>
+                <th>🗑  Action</th>
+                <th>🗑  Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for emprunteur in emprunteurs %}
+            <tr>
+                <td>{{ emprunteur.nom }}</td>
+                <td>{{ emprunteur.prenom }}</td>
+                <td>{{ emprunteur.adresse }}</td>
+                <td>{{ emprunteur.email }}</td>
+                <td>{{ emprunteur.telephone }}</td>
+                <td>
+                    <a href="{% url 'supprimer_emprunteur' emprunteur.id %}" style="color: red; font-weight: bold;" onclick="return confirm('Confirmer la suppression ?')">🗑 Supprimer</a>
+                </td>
+                <td>
+                    <a href="{% url 'modifier_emprunteur' emprunteur.id %}" class="btn-orange">✏️ Modifier</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" style="text-align: center;">Aucun membre trouvé.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <style>
+        table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        table tr:hover {
+            background-color: #ffe1cc;
+        }
+    </style>
+
+
+    {% endblock %}
+
+</body>
+</html>

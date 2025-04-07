@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Médiathèque</title>
+
+    <style>
+    .btn-orange {
+        background-color: white;
+        border: 1px solid #e3713b;
+        padding: 5px 10px;
+        color: #e3713b;
+        font-weight: bold;
+        text-decoration: none;
+        border-radius: 4px;
+        display: inline-block;
+        margin-bottom: 10px;
+    }
+
+    .btn-orange:hover {
+        background-color: #e3713b;
+        color: white;
+    }
+    </style>
+
+</head>
+<body>
+   {% extends 'base.html' %}
+
+{% block content %}
+<h1>Menu des bibliothécaires</h1>
+
+<div class="menu-bibliothecaire">
+    <a href="{% url 'liste_emprunts' %}" class="btn-orange">Les emprunts</a>
+    <a href="{% url 'emprunteurs' %}" class="btn-orange">👥 La liste des membres</a>
+    <a href="{% url 'liste_livres' %}" class="btn-orange">📚 La liste des livres</a>
+    <a href="{% url 'liste_cds' %}" class="btn-orange">💿 La liste des CD</a>
+    <a href="{% url 'liste_dvds' %}" class="btn-orange">📀 La liste des DVD</a>
+    <a href="{% url 'liste_plateaux' %}" class="btn-orange">🎲 La liste des jeux de plateau</a>
+</div>
+
+<h2>Liste des médias empruntés</h2>
+
+   <!-- 🔁 Bouton retour placé ici -->
+    <a href="{% url 'accueil' %}" class="btn-orange">⬅ Retour</a>
+
+<table border="1" cellpadding="10" cellspacing="0" style="width:100%; border-collapse: collapse;">
+    <thead style="background-color: #fce6d5;">
+        <tr>
+            <th>ID</th>
+            <th>Membre</th>
+            <th>Livre Emprunté</th>
+            <th>DVD Emprunté</th>
+            <th>CD Emprunté</th>
+            <th>Date d'Emprunt</th>
+            <th>Date de Retour</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for emprunt in emprunts %}
+        <tr>
+            <td>{{ emprunt.id }}</td>
+            <td>{{ emprunt.emprunteur.nom }} {{ emprunt.emprunteur.prenom }}</td>
+            <td>{% if emprunt.media.type == 'livre' %}{{ emprunt.media.titre }}{% endif %}</td>
+            <td>{% if emprunt.media.type == 'dvd' %}{{ emprunt.media.titre }}{% endif %}</td>
+            <td>{% if emprunt.media.type == 'cd' %}{{ emprunt.media.titre }}{% endif %}</td>
+            <td>{{ emprunt.date_emprunt|date:"d M, Y" }}</td>
+            <td>
+                {% if emprunt.date_retour %}
+                    {{ emprunt.date_retour|date:"d M, Y H:i:s" }}
+                {% else %}
+                    -
+                {% endif %}
+            </td>
+            <td>
+                {% if emprunt.date_retour %}
+                    ✅ Rendu
+                {% else %}
+                    <a href="{% url 'retourner_emprunt' emprunt.id %}">📥 Rendre</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="8">Aucun emprunt trouvé.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h3 style="margin-top: 30px;">Liste des jeux de plateaux empruntés</h3>
+
+<table border="1" cellpadding="10" cellspacing="0" style="width:100%; border-collapse: collapse;">
+    <thead style="background-color: #fce6d5;">
+        <tr>
+            <th>ID</th>
+            <th>Membre</th>
+            <th>Nom du jeu</th>
+            <th>Date d'Emprunt</th>
+            <th>Date de Retour</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for emprunt in emprunts_plateaux %}
+        <tr>
+            <td>{{ emprunt.id }}</td>
+            <td>{{ emprunt.emprunteur.nom }} {{ emprunt.emprunteur.prenom }}</td>
+            <td>{{ emprunt.plateau.nom }}</td>
+            <td>{{ emprunt.date_emprunt|date:"d M Y H:i" }}</td>
+            <td>
+                {% if emprunt.date_retour %}
+                    {{ emprunt.date_retour|date:"d M Y H:i" }}
+                {% else %}
+                    -
+                {% endif %}
+            </td>
+            <td>
+                {% if not emprunt.date_retour %}
+                    <a href="{% url 'retourner_emprunt_plateau' emprunt.id %}">📥 Rendre</a>
+                    |
+                    <a href="{% url 'supprimer_emprunt_plateau' emprunt.id %}" onclick="return confirm('Supprimer cet emprunt ?')">🗑 Supprimer</a>
+                {% else %}
+                    ✅ Rendu
+                    |
+                    <a href="{% url 'supprimer_emprunt_plateau' emprunt.id %}" onclick="return confirm('Supprimer cet emprunt ?')">🗑 Supprimer</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6">Aucun jeu de plateau emprunté.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+<style>
+
+    .menu-bibliothecaire {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+
+    }
+
+    .btn-orange {
+        background-color: white;
+        border: 1px solid #e3713b;
+        padding: 5px 10px;
+        color: #e3713b;
+        font-weight: bold;
+        text-decoration: none;
+        margin-right: 5px;
+        border-radius: 4px;
+    }
+    .btn-orange:hover {
+        background-color: #e3713b;
+        color: white;
+    }
+    table tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+    table tr:hover {
+        background-color: #ffe1cc;
+    }
+</style>
+{% endblock %}
+
+</body>
+</html>

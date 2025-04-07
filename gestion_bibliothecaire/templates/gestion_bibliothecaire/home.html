@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Médiathèque</title>
+</head>
+<body>
+
+    {% extends 'base.html' %}
+
+    {% block content %}
+    <h1>Médias disponibles</h1>
+    <ul>
+        {% for media in medias %}
+            <li>
+                {{ media.titre }} - {{ media.get_type_display }} -
+                {% if media.disponible %}
+                    Disponible
+                {% else %}
+                    Indisponible
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+    {% endblock %}
+</body>
+</html>

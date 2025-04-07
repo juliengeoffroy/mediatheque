@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Médiathèque</title>
+
+  <style>
+    .btn-orange {
+        background-color: white;
+        border: 1px solid #e3713b;
+        padding: 5px 10px;
+        color: #e3713b;
+        font-weight: bold;
+        text-decoration: none;
+        border-radius: 4px;
+        display: inline-block;
+        margin-bottom: 10px;
+    }
+
+    .btn-orange:hover {
+        background-color: #e3713b;
+        color: white;
+    }
+  </style>
+
+</head>
+<body>
+  {% extends 'base.html' %}
+{% block content %}
+<h2>Liste des DVD</h2>
+
+  <!-- 🔁 Bouton retour placé ici -->
+  <a href="{% url 'liste_emprunts' %}" class="btn-orange">⬅ Retour</a>
+
+<table border="1" cellpadding="10" cellspacing="0" style="width:100%; border-collapse: collapse;">
+    <thead style="background-color: #fce6d5;">
+        <tr>
+            <th>ID</th>
+            <th>Titre</th>
+            <th>Auteur</th>
+            <th>Disponibilité</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for media in medias %}
+        <tr>
+            <td>{{ media.id }}</td>
+            <td>{{ media.titre }}</td>
+            <td>{{ media.auteur }}</td>
+            <td>{{ media.disponible|yesno:"✅ Disponible,❌ Emprunté" }}</td>
+            <td><a href="{% url 'supprimer_media' media.id %}">🗑 Supprimer</a></td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="5">Aucun média trouvé.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+
+</body>
+</html>

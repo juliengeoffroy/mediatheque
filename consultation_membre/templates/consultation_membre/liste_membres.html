@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Liste des Membres</h1>
+<a href="{% url 'liste_membres' %}" class="btn-orange">👥 Voir les membres</a>
+<table border="1" cellpadding="10" style="width:100%;">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Email</th>
+            <th>Adresse</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for membre in membres %}
+        <tr>
+            <td>{{ membre.id }}</td>
+            <td>{{ membre.nom }}</td>
+            <td>{{ membre.prenom }}</td>
+            <td>{{ membre.email }}</td>
+            <td>{{ membre.adresse }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">Aucun membre trouvé.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+</body>
+</html>

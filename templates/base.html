@@ -1,0 +1,105 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Médiathèque</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-image: url("{% static 'images/FD.jpg' %}");
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        header {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        header img {
+            width: 100px;
+        }
+        nav a {
+            margin: 0 10px;
+            text-decoration: none;
+            font-weight: bold;
+            color: #333;
+        }
+        .container {
+            background-color: rgba(255,255,255,0.9);
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+        }
+        button {
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #555;
+        }
+
+        body {
+            background-image: url("{% static 'images/FD.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            margin: 30px auto;
+            max-width: 900px;
+            border-radius: 8px;
+        }
+
+        button {
+            padding: 8px 16px;
+            border: none;
+            background-color: #444;
+            color: white;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background-color: #222;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="{% static 'images/logo.png' %}" alt="Logo Médiathèque">
+        <nav>
+            <a href="/">Accueil</a>
+            <a href="{% url 'bibliothecaire' %}">Bibliothécaire</a>
+            <a href="{% url 'liste_emprunteurs' %}">👥 Espace membre</a>
+        </nav>
+    </header>
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+    <div style="text-align: right; margin-bottom: 10px;">
+        {% if user.is_authenticated %}
+            Bonjour, {{ user.username }} 👋
+            <a href="{% url 'logout' %}"><button>Se déconnecter</button></a>
+        {% else %}
+            <a href="{% url 'connexion' %}"><button>Se connecter</button></a>
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Mediathèque</title>
+</head>
+<body>
+    {% extends 'base.html' %}
+
+{% block content %}
+<h2 style="margin-top: 30px;">Menu des membres</h2>
+
+<a href="{% url 'liste_medias' %}" class="btn-orange">La liste des médias</a>
+
+<h3 style="margin-top: 20px;">Liste des médias empruntés</h3>
+
+<div style="margin-bottom: 10px;">
+    <a href="#" class="btn-orange">📚 Emprunter Livre</a>
+    <a href="#" class="btn-orange">📀 Emprunter DVD</a>
+    <a href="#" class="btn-orange">💿 Emprunter CD</a>
+    <a href="#" class="btn-orange">🧩 Jeu de plateau</a>
+</div>
+
+<table border="1" cellpadding="10" cellspacing="0" style="width: 100%; border-collapse: collapse;">
+    <thead style="background-color: #fce6d5;">
+        <tr>
+            <th>ID</th>
+            <th>Membre</th>
+            <th>Livre Emprunté</th>
+            <th>DVD Emprunté</th>
+            <th>CD Emprunté</th>
+            <th>Jeu Emprunté</th>
+            <th>Date d'Emprunt</th>
+            <th>Date de Retour</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for emprunt in emprunts %}
+        <tr>
+            <td>{{ emprunt.id }}</td>
+            <td>{{ emprunt.emprunteur.nom }} {{ emprunt.emprunteur.prenom }}</td>
+            <td>{% if emprunt.media.type == 'livre' %}{{ emprunt.media.titre }}{% endif %}</td>
+            <td>{% if emprunt.media.type == 'dvd' %}{{ emprunt.media.titre }}{% endif %}</td>
+            <td>{% if emprunt.media.type == 'cd' %}{{ emprunt.media.titre }}{% endif %}</td>
+            <td>{% if emprunt.media.type == 'jeu' %}{{ emprunt.media.titre }}{% endif %}</td>
+            <td>{{ emprunt.date_emprunt|date:"d M, Y" }}</td>
+            <td>
+                {% if emprunt.date_retour %}
+                    {{ emprunt.date_retour|date:"d M, Y H:i:s" }}
+                {% else %}
+                    -
+                {% endif %}
+            </td>
+            <td>
+                {% if emprunt.date_retour %}
+                    Retour déjà effectué
+                {% else %}
+                    <a href="{% url 'retourner_emprunt' emprunt.id %}">📥 Rendre</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="8">Aucun emprunt trouvé.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<style>
+    .btn-orange {
+        background-color: white;
+        border: 1px solid #e3713b;
+        padding: 5px 10px;
+        color: #e3713b;
+        font-weight: bold;
+        text-decoration: none;
+        margin-right: 5px;
+        border-radius: 4px;
+    }
+    .btn-orange:hover {
+        background-color: #e3713b;
+        color: white;
+    }
+    table tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+    table tr:hover {
+        background-color: #ffe1cc;
+    }
+</style>
+{% endblock %}
+
+</body>
+</html>

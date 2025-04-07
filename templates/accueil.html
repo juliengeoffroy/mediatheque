@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Médiathèque</title>
+</head>
+<body>
+
+    {% extends 'base.html' %}
+
+    {% load static %}
+
+    {% block content %}
+    <h1>Bienvenue à la Médiathèque</h1>
+
+    <div class="btn-container">
+        <a href="{% url 'liste_emprunts' %}" class="btn-dark">📚 Espace Bibliothécaire</a>
+        <a href="{% url 'liste_emprunteurs' %}" class="btn-dark">🧑‍🤝‍🧑 Espace Membre</a>
+        <a href="{% url 'ajouter_emprunteur' %}" class="btn-dark">➕ Ajouter un membre</a>
+        <a href="{% url 'medias_disponibles' %}" class="btn-dark media-separer">📚 Voir les médias</a>
+    </div>
+
+    <style>
+.btn-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn-dark {
+    background-color: #333;
+    color: white;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+.btn-dark:hover {
+    background-color: #555;
+}
+
+.media-separer {
+    margin-top: 10px;
+}
+</style>
+
+    {% endblock %}
+
+</body>
+</html>
+

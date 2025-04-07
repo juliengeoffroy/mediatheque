@@ -1,0 +1,57 @@
+[
+  {
+    "model": "gestion_bibliothecaire.emprunteur",
+    "pk": 1,
+    "fields": {
+      "nom": "Julien Geoffroy",
+      "bloque": false
+    }
+  },
+  {
+    "model": "gestion_bibliothecaire.emprunteur",
+    "pk": 2,
+    "fields": {
+      "nom": "Olivier Geoffroy",
+      "bloque": false
+    }
+  },
+  {
+    "model": "gestion_bibliothecaire.media",
+    "pk": 1,
+    "fields": {
+      "titre": "Harry potter",
+      "type": "livre",
+      "auteur": "J.K Rowling",
+      "disponible": true
+    }
+  },
+  {
+    "model": "gestion_bibliothecaire.media",
+    "pk": 2,
+    "fields": {
+      "titre": "Ma faute",
+      "type": "cd",
+      "auteur": "Marine",
+      "disponible": true
+    }
+  },
+  {
+    "model": "gestion_bibliothecaire.media",
+    "pk": 3,
+    "fields": {
+      "titre": "Catan",
+      "type": "jeu",
+      "auteur": "Klaus Teuber",
+      "disponible": true
+    }
+  },
+  {
+    "model": "gestion_bibliothecaire.emprunt",
+    "pk": 1,
+    "fields": {
+      "media": 1,
+      "emprunteur": 1,
+      "date_emprunt": "2025-03-30"
+    }
+  }
+]
