@@ -1,4 +1,4 @@
-from django.urls import path, include
+from django.urls import path
 from . import views
 from django.contrib import admin
 
@@ -6,6 +6,7 @@ from django.contrib import admin
 urlpatterns = [
 
     path('', views.home, name='home'),
+    path('', views.espace_bibliothecaire, name='espace_bibliothecaire'),
     path('emprunteurs/', views.liste_emprunteurs, name='emprunteurs'),
     path('emprunteurs/', views.liste_emprunteurs, name='liste_emprunteurs'),
     path('emprunteurs/ajouter/', views.ajouter_emprunteur, name='ajouter_emprunteur'),
@@ -27,6 +28,12 @@ urlpatterns = [
     path('cds/', views.liste_cds, name='liste_cds'),
     path('bibliothecaire/', views.medias_disponibles, name='bibliothecaire'),
     path('membre/modifier/<int:emprunteur_id>/', views.modifier_emprunteur, name='modifier_emprunteur'),
-
+    path('emprunteurs-emprunts/', views.liste_emprunteurs_empruntant, name='emprunteurs_emprunts'),
+    path('media/modifier/<int:media_id>/', views.modifier_media, name='modifier_media'),
+    path('ajouter/livre/', views.ajouter_livre, name='ajouter_livre'),
+    path('ajouter/cd/', views.ajouter_cd, name='ajouter_cd'),
+    path('ajouter/dvd/', views.ajouter_dvd, name='ajouter_dvd'),
+    path('ajouter/plateau/', views.ajouter_plateau, name='ajouter_plateau'),
+    path('plateau/modifier/<int:plateau_id>/', views.modifier_plateau, name='modifier_plateau'),
 
 ]

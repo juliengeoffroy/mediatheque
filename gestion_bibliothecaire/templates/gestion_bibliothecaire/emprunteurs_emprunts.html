@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Médiathèque</title>
 
-  <style>
+    <style>
     .btn-orange {
         background-color: white;
         border: 1px solid #e3713b;
@@ -22,39 +22,38 @@
         color: white;
     }
   </style>
-
 </head>
 <body>
-  {% extends 'base.html' %}
-{% block content %}
-<h2>Liste des CD</h2>
+    {% extends 'base.html' %}
 
-  <!-- 🔁 Bouton retour placé ici -->
-  <a href="{% url 'liste_emprunts' %}" class="btn-orange">⬅ Retour</a>
+{% block content %}
+<h2>Liste des emprunteurs avec emprunts</h2>
+
+    <a href="{% url 'liste_emprunts' %}" class="btn-orange">⬅ Retour</a>
 
 <table border="1" cellpadding="10" cellspacing="0" style="width:100%; border-collapse: collapse;">
     <thead style="background-color: #fce6d5;">
         <tr>
             <th>ID</th>
-            <th>Titre</th>
-            <th>Auteur</th>
-            <th>Disponibilité</th>
-            <th>Action</th>
-            <th>Action</th>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Email</th>
+            <th>Téléphone</th>
         </tr>
     </thead>
     <tbody>
-        {% for media in medias %}
+        {% for emprunteur in emprunteurs %}
         <tr>
-            <td>{{ media.id }}</td>
-            <td>{{ media.titre }}</td>
-            <td>{{ media.auteur }}</td>
-            <td>{{ media.disponible|yesno:"✅ Disponible,❌ Emprunté" }}</td>
-            <td><a href="{% url 'supprimer_media' media.id %}">🗑 Supprimer</a></td>
-            <td><a href="{% url 'modifier_media' media.id %}" class="btn-orange">✏️ Modifier</a></td>
+            <td>{{ emprunteur.id }}</td>
+            <td>{{ emprunteur.nom }}</td>
+            <td>{{ emprunteur.prenom }}</td>
+            <td>{{ emprunteur.email }}</td>
+            <td>{{ emprunteur.telephone }}</td>
         </tr>
         {% empty %}
-        <tr><td colspan="5">Aucun média trouvé.</td></tr>
+        <tr>
+            <td colspan="5">Aucun emprunteur avec emprunt trouvé.</td>
+        </tr>
         {% endfor %}
     </tbody>
 </table>

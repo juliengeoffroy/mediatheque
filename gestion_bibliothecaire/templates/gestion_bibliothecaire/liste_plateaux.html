@@ -36,9 +36,11 @@
 <table border="1" cellpadding="10" cellspacing="0" style="width:100%; border-collapse: collapse;">
     <thead style="background-color: #fce6d5;">
         <tr>
-            <th>Nom</th>
-            <th>Description</th>
-            <th>Disponible</th>
+
+          <th>Nom</th>
+          <th>Description</th>
+          <th>Disponible</th>
+          <th>Action</th>
         </tr>
     </thead>
     <tbody>
@@ -53,6 +55,7 @@
                     ❌ Emprunté
                 {% endif %}
             </td>
+            <td><a href="{% url 'modifier_plateau' jeu.id %}" class="btn-orange">✏️ Modifier</a></td>
         </tr>
         {% empty %}
         <tr>

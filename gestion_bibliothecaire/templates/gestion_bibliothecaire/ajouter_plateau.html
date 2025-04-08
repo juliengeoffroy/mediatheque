@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Médiathèque</title>
 
-    <style>
+  <style>
     .btn-orange {
         background-color: white;
         border: 1px solid #e3713b;
@@ -24,18 +24,15 @@
   </style>
 </head>
 <body>
-    {% extends 'base.html' %}
-
+  {% extends 'base.html' %}
 {% block content %}
-<h2>Modifier un membre</h2>
-
+<h2>Ajouter un jeu de plateau</h2>
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit" class="btn-orange">✅ Mettre à jour</button>
+    <button type="submit" class="btn-orange">✅ Ajouter</button>
 </form>
-
-<a href="{% url 'emprunteurs' %}" class="btn-orange">⬅ Retour à la liste des membres</a>
+<a href="{% url 'liste_emprunts' %}" class="btn-orange">⬅ Retour</a>
 {% endblock %}
 
 </body>

@@ -24,19 +24,17 @@
   </style>
 </head>
 <body>
-    {% extends 'base.html' %}
+  {% extends 'base.html' %}
 
-{% block content %}
-<h2>Modifier un membre</h2>
-
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn-orange">✅ Mettre à jour</button>
-</form>
-
-<a href="{% url 'emprunteurs' %}" class="btn-orange">⬅ Retour à la liste des membres</a>
-{% endblock %}
+    {% block content %}
+    <h2>Modifier le média</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn-orange">✅ Enregistrer les modifications</button>
+    </form>
+    <a href="{% url 'liste_emprunts' %}" class="btn-orange">⬅ Retour</a>
+  {% endblock %}
 
 </body>
 </html>

@@ -50,6 +50,7 @@
             <td>{{ media.auteur }}</td>
             <td>{{ media.disponible|yesno:"✅ Disponible,❌ Emprunté" }}</td>
             <td><a href="{% url 'supprimer_media' media.id %}">🗑 Supprimer</a></td>
+            <td><a href="{% url 'modifier_media' media.id %}" class="btn-orange">✏️ Modifier</a></td>
         </tr>
         {% empty %}
         <tr><td colspan="5">Aucun média trouvé.</td></tr>

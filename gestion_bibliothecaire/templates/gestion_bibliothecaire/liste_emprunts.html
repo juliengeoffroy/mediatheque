@@ -31,13 +31,22 @@
 <h1>Menu des bibliothécaires</h1>
 
 <div class="menu-bibliothecaire">
-    <a href="{% url 'liste_emprunts' %}" class="btn-orange">Les emprunts</a>
+    <a href="{% url 'emprunteurs_emprunts' %}" class="btn-orange">👤 Voir la liste des emprunteurs</a>
     <a href="{% url 'emprunteurs' %}" class="btn-orange">👥 La liste des membres</a>
     <a href="{% url 'liste_livres' %}" class="btn-orange">📚 La liste des livres</a>
     <a href="{% url 'liste_cds' %}" class="btn-orange">💿 La liste des CD</a>
     <a href="{% url 'liste_dvds' %}" class="btn-orange">📀 La liste des DVD</a>
     <a href="{% url 'liste_plateaux' %}" class="btn-orange">🎲 La liste des jeux de plateau</a>
 </div>
+   <div style="margin-bottom: 15px;">
+        <a href="{% url 'ajouter_livre' %}" class="btn-orange">📚 Ajouter un livre</a>
+        <a href="{% url 'ajouter_cd' %}" class="btn-orange">💿 Ajouter un CD</a>
+        <a href="{% url 'ajouter_dvd' %}" class="btn-orange">📀 Ajouter un DVD</a>
+        <a href="{% url 'ajouter_plateau' %}" class="btn-orange">🎲 Ajouter un jeu de plateau</a>
+    </div>
+
+
+
 
 <h2>Liste des médias empruntés</h2>
 
