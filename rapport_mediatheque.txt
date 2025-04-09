@@ -1,0 +1,59 @@
+Rapport de projet - Application de gestion de médiathèque
+
+1. Étude et correctifs du code fourni
+
+Le projet initial contenait du code incomplet, avec plusieurs erreurs de vues et une architecture non finalisée. Voici les principales corrections apportées :
+
+Correction des vues avec des noms doublons (ex: liste_emprunts défini plusieurs fois).
+
+Suppression des vues obsolètes et nettoyage des importations inutiles.
+
+Réorganisation du fichier urls.py pour éviter les redondances et assurer une navigation claire.
+
+Ajout de la vue espace_bibliothecaire pour centraliser les fonctions protégées.
+
+Mise en place du décorateur @login_required pour protéger les vues bibliothécaires.
+
+2. Mise en place des fonctionnalités demandées
+
+Connexion / déconnexion des bibliothécaires : Ajout d’une authentification avec formulaire de connexion, redirection vers l'espace bibliothécaire après connexion.
+
+Navigation claire : Ajout de boutons dans le menu pour accéder à la liste des livres, DVD, CD, jeux de plateau, membres et emprunts.
+
+Ajout / modification / suppression : Formulaires fonctionnels pour gérer les livres, CD, DVD, jeux de plateau, et les membres.
+
+Tableaux d’affichage : Affichage des emprunts (livres, CD, DVD, jeux) avec bouton de retour.
+
+Affichage conditionnel : Les pages membres sont accessibles librement, les pages bibliothécaires nécessitent une connexion.
+
+3. Stratégie de tests
+
+Tests manuels effectués pour chaque fonctionnalité :
+
+Connexion/déconnexion bibliothécaire
+
+Accès conditionnel aux vues protégées
+
+Ajout/modification/suppression de médias et membres
+
+Création et restitution d’emprunts
+
+Vérification de l’affichage des tableaux (liste des emprunts, jeux de plateau, médias disponibles, etc.)
+
+Affichage en base des emprunts et disponibilités des médias validés dans le shell Django.
+
+4. Base de données avec données test
+
+Plusieurs médias ont été insérés :
+
+Livres : Harry Potter, Le Seigneur des Anneaux...
+
+DVD : tous les Harry Potter, Taken, Avatar, Marvel...
+
+CD : Obispo, Mylène Farmer, Johnny, Pierre Garnier...
+
+Jeux de plateau : Monopoly, Cluedo, Risk, Bonne Paye, Labyrinthe...
+
+Plusieurs emprunteurs de test ont été créés avec emprunts réels.
+
+Les données ont été insérées manuellement via l’admin ou le shell Django.
