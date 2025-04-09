@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 from django.contrib import admin
-
+from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
 
@@ -35,5 +35,7 @@ urlpatterns = [
     path('ajouter/dvd/', views.ajouter_dvd, name='ajouter_dvd'),
     path('ajouter/plateau/', views.ajouter_plateau, name='ajouter_plateau'),
     path('plateau/modifier/<int:plateau_id>/', views.modifier_plateau, name='modifier_plateau'),
+    path('deconnexion/', LogoutView.as_view(next_page='home'), name='deconnexion'),
+    path('retourner/<int:emprunt_id>/', views.rendre_emprunt, name='retourner_emprunt'),
 
 ]

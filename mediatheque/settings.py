@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'gestion_bibliothecaire',
     'consultation_membre',
+
 ]
 
 MIDDLEWARE = [
@@ -124,3 +125,7 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_URL = 'connexion'
+LOGIN_REDIRECT_URL = 'espace_bibliothécaire'
+LOGOUT_REDIRECT_URL = 'connexion'

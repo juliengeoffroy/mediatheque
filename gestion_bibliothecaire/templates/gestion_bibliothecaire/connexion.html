@@ -45,8 +45,14 @@
     <button type="submit" class="btn-orange">Se connecter</button>
 </form>
 
-{% endblock %}
+<h2>Connexion Bibliothécaire</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Se connecter</button>
+</form>
 
+{% endblock %}
 
 </body>
 </html>

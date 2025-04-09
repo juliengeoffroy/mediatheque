@@ -4,9 +4,12 @@ from .forms import EmprunteurForm, EmpruntForm
 from .forms import ConnexionForm
 from .forms import MediaForm, PlateauJeuForm
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.utils import timezone
 from datetime import timedelta
+
 
 def home(request):
         medias = Media.objects.all()
@@ -51,10 +54,6 @@ def supprimer_emprunteur(request, emprunteur_id):
     emprunteur.delete()
     return redirect('liste_emprunteurs')
 
-def liste_emprunts(request):
-    emprunts = Emprunt.objects.all()
-    return render(request, 'gestion_bibliothecaire/liste_emprunts.html', {'emprunts': emprunts})
-
 def rendre_emprunt(request, emprunt_id):
     emprunt = get_object_or_404(Emprunt, id=emprunt_id)
     emprunt.media.disponible = True
@@ -63,19 +62,20 @@ def rendre_emprunt(request, emprunt_id):
     return redirect('emprunts')
 
 def page_connexion(request):
-    return render(request, 'gestion_bibliothecaire/connexion.html')
-
-def page_connexion(request):
     if request.method == "POST":
         form = ConnexionForm(request.POST)
+        form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
+            user = form.get_user()
+            login(request, user)
             username = form.cleaned_data["username"]
             password = form.cleaned_data["password"]
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('liste_medias')  # ⚠️ à adapter à ton projet
+                return redirect('espace_bibliothecaire')
             else:
+                form = AuthenticationForm()
                 form.add_error(None, "Nom d'utilisateur ou mot de passe incorrect.")
                 messages.error(request, "Identifiants incorrects.")
             return render(request, 'gestion_bibliothecaire/connexion.html')
@@ -83,22 +83,10 @@ def page_connexion(request):
         form = ConnexionForm()
     return render(request, 'gestion_bibliothecaire/connexion.html', {'form': form})
 
-def liste_emprunts(request):
-    emprunts = Emprunt.objects.all()
-    return render(request, 'gestion_bibliothecaire/liste_emprunts.html', {'emprunts': emprunts})
-
 def supprimer_media( request, media_id):
     media = get_object_or_404(Media, id=media_id)
     media.delete()
     return redirect('liste_medias')
-
-def liste_medias(request):
-    medias = Media.objects.all()
-    return render(request, 'gestion_bibliothecaire/liste_medias.html', {'medias': medias})
-
-def medias_disponibles(request):
-    medias = Media.objects.all()
-    return render(request, 'gestion_bibliothecaire/medias_disponibles.html', {'medias': medias})
 
 def liste_plateaux(request):
     plateaux = PlateauJeu.objects.all()
@@ -111,14 +99,6 @@ def retourner_emprunt_plateau(request, emprunt_id):
     emprunt.plateau.save()
     emprunt.save()
     return redirect('liste_emprunts')
-
-def liste_emprunts(request):
-    emprunts = Emprunt.objects.all()
-    emprunts_plateaux = EmpruntPlateauJeu.objects.all()
-    return render(request, 'gestion_bibliothecaire/liste_emprunts.html', {
-        'emprunts': emprunts,
-        'emprunts_plateaux': emprunts_plateaux
-    })
 
 def supprimer_emprunt_plateau(request, emprunt_id):
     emprunt = get_object_or_404(EmpruntPlateauJeu, id=emprunt_id)
@@ -204,6 +184,7 @@ def ajouter_media_type(request, media_type):
         form = MediaForm()
     return render(request, 'gestion_bibliothecaire/ajouter_media.html', {'form': form, 'type': media_type})
 
+@login_required
 def espace_bibliothecaire(request):
     emprunts = Emprunt.objects.all()
     emprunts_plateaux = EmpruntPlateauJeu.objects.all()
@@ -222,4 +203,3 @@ def modifier_plateau(request, plateau_id):
     else:
         form = PlateauJeuForm(instance=plateau)
     return render(request, 'gestion_bibliothecaire/modifier_plateau.html', {'form': form})
-
