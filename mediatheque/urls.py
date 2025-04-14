@@ -7,7 +7,7 @@ from gestion_bibliothecaire import views
 from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
-    path('connexion/', views.page_connexion, name='connexion'),
+    path('connexion/', views.login_view, name='connexion'),
     path('logout/', LogoutView.as_view(next_page='connexion'), name='logout'),
     path('admin/', admin.site.urls),
     path('', TemplateView.as_view(template_name='accueil.html'), name='accueil'),

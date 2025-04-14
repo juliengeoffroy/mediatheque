@@ -3,7 +3,7 @@ from .models import Media, Emprunteur, Emprunt, EmpruntPlateauJeu, PlateauJeu
 from .forms import EmprunteurForm, EmpruntForm
 from .forms import ConnexionForm
 from .forms import MediaForm, PlateauJeuForm
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -61,27 +61,6 @@ def rendre_emprunt(request, emprunt_id):
     emprunt.delete()
     return redirect('emprunts')
 
-def page_connexion(request):
-    if request.method == "POST":
-        form = ConnexionForm(request.POST)
-        form = AuthenticationForm(request, data=request.POST)
-        if form.is_valid():
-            user = form.get_user()
-            login(request, user)
-            username = form.cleaned_data["username"]
-            password = form.cleaned_data["password"]
-            user = authenticate(request, username=username, password=password)
-            if user is not None:
-                login(request, user)
-                return redirect('espace_bibliothecaire')
-            else:
-                form = AuthenticationForm()
-                form.add_error(None, "Nom d'utilisateur ou mot de passe incorrect.")
-                messages.error(request, "Identifiants incorrects.")
-            return render(request, 'gestion_bibliothecaire/connexion.html')
-    else:
-        form = ConnexionForm()
-    return render(request, 'gestion_bibliothecaire/connexion.html', {'form': form})
 
 def supprimer_media( request, media_id):
     media = get_object_or_404(Media, id=media_id)
@@ -184,7 +163,7 @@ def ajouter_media_type(request, media_type):
         form = MediaForm()
     return render(request, 'gestion_bibliothecaire/ajouter_media.html', {'form': form, 'type': media_type})
 
-@login_required
+@login_required(login_url='/login/')
 def espace_bibliothecaire(request):
     emprunts = Emprunt.objects.all()
     emprunts_plateaux = EmpruntPlateauJeu.objects.all()
@@ -203,3 +182,26 @@ def modifier_plateau(request, plateau_id):
     else:
         form = PlateauJeuForm(instance=plateau)
     return render(request, 'gestion_bibliothecaire/modifier_plateau.html', {'form': form})
+
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('espace_bibliothecaire')
+        else:
+            return render(request, 'login.html', {'error': 'Identifiants invalides'})
+    return render(request, 'login.html')
+def deconnexion(request):
+    logout(request)
+    return redirect('accueil')
+
+@login_required(login_url='connexion')
+def espace_bibliothecaire(request):
+    return render(request, 'espace_bibliothecaire.html')
+
+def logout_view(request):
+    logout(request)
+    return redirect('/')

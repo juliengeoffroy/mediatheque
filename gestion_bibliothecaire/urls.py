@@ -18,7 +18,6 @@ urlpatterns = [
     path('membres/', views.liste_emprunteurs, name='liste_emprunteurs'),
     path('emprunteurs/supprimer/<int:emprunteur_id>/', views.supprimer_emprunteur, name='supprimer_emprunteur'),
     path('emprunts/', views.liste_emprunts, name='liste_emprunts'),
-    path('connexion/', views.page_connexion, name='connexion'),
     path('medias-disponibles/', views.medias_disponibles, name='medias_disponibles'),
     path('plateaux/', views.liste_plateaux, name='liste_plateaux'),
     path('retourner-jeu/<int:emprunt_id>/', views.retourner_emprunt_plateau, name='retourner_emprunt_plateau'),
@@ -37,5 +36,9 @@ urlpatterns = [
     path('plateau/modifier/<int:plateau_id>/', views.modifier_plateau, name='modifier_plateau'),
     path('deconnexion/', LogoutView.as_view(next_page='home'), name='deconnexion'),
     path('retourner/<int:emprunt_id>/', views.rendre_emprunt, name='retourner_emprunt'),
+    path('espace-bibliothecaire/', views.espace_bibliothecaire, name='espace_bibliothecaire'),
+    path('login/', views.login_view, name='login'),
+    path('logout/', views.logout_view, name='logout'),
+    path('connexion/', views.login_view, name='connexion'),
 
 ]
